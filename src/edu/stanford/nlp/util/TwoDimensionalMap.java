@@ -223,6 +223,8 @@ public class TwoDimensionalMap<K1, K2, V> implements Serializable, Iterable<TwoD
     public K2 getSecondKey() { return secondKey; }
     public V getValue() { return value; }
 
+    public void setValue(V newValue) { value = newValue; }
+
     @Override
     public String toString() {
       return "(" + firstKey + "," + secondKey + "," + value + ")";
