@@ -7,6 +7,7 @@ import org.ejml.simple.SimpleMatrix;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
 public class ChangeMatrices {
     public static void main( String args[] ) throws IOException {
@@ -34,12 +35,13 @@ public class ChangeMatrices {
         
         String binaryWDir = matrixDir + File.separator + "binaryW";
         
-        for (TwoDimensionalMap.Entry<String, String, SimpleMatrix> entry : model.binaryTransform) {
-          String filename = binaryWDir + File.separator + entry.getFirstKey() + "_" + entry.getSecondKey() + ".txt";
-        
+        for (Iterator<TwoDimensionalMap.Entry<String, String, SimpleMatrix>> it = model.binaryTransform.iterator(); it.hasNext(); ) {
+            TwoDimensionalMap.Entry<String, String, SimpleMatrix> entry = it.next();
+            String filename = binaryWDir + File.separator + entry.getFirstKey() + "_" + entry.getSecondKey() + ".txt";
             SimpleMatrix newMatrix = SimpleMatrix.loadCSV(filename);
-
-            entry.setValue(newMatrix);
+            
+            model.binaryTransform.put(entry.getFirstKey(), entry.getSecondKey(), newMatrix);
+            //entry.setValue(newMatrix);
         }
 
         LexicalizedParser newParser = LexicalizedParser.copyLexicalizedParser(parser);
